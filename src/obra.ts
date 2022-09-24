@@ -1,63 +1,106 @@
-export const estados = ["STAND BY", "LICITACION", "ACTIVA" ,"FINALIZADA" ,"CANCELADA"] 
-import { Licitacion } from './licitacion'
+import { Licitacion } from "./licitacion";
+
+export const ESTADOS = [
+  "STAND BY",
+  "LICITACION",
+  "ACTIVA",
+  "FINALIZADA",
+  "CANCELADA",
+];
 
 export class Proyecto {
-    sender:string;
-    unix_timestamp: number;
+  sender: string;
+  unixTimeStamp: number;
+  nombre: string;
+  ubicacion: string;
+  descripcion: string;
+  aperturaLicitacion: number;
+  fechaLimiteLicitacion: number;
+  hashPliego: string;
+  licitaciones: Licitacion[];
+  estado: number;
+
+  constructor({
+    sender,
+    unixTimeStamp,
+    nombre,
+    ubicacion,
+    descripcion,
+    aperturaLicitacion,
+    fechaLimiteLicitacion,
+    hashPliego,
+    estado,
+  }: {
+    sender: string;
+    unixTimeStamp: number;
     nombre: string;
-    ubicacion:string;
+    ubicacion: string;
     descripcion: string;
-    apertura_licitacion: number;
-    fecha_limite_licitacion: number;
-    hash_pliego:string; 
-    licitaciones: Licitacion[];
-    estado:number
-
-  constructor({ sender,unix_timestamp,nombre,ubicacion,descripcion,apertura_licitacion,fecha_limite_licitacion,hash_pliego,estado }: { 
-    sender:string;
-    unix_timestamp: number;
-    nombre: string;
-    ubicacion:string;
-    descripcion: string;
-    apertura_licitacion:number;
-    fecha_limite_licitacion: number;
-    hash_pliego:string; 
-    estado:number }) {
-        this.sender=sender;
-        this.unix_timestamp=unix_timestamp;
-        this.nombre=nombre;
-        this.ubicacion=ubicacion;
-        this.descripcion=descripcion;
-        this.apertura_licitacion=apertura_licitacion;
-        this.fecha_limite_licitacion=fecha_limite_licitacion;
-        this.hash_pliego=hash_pliego;
-        this.estado=estado;
+    aperturaLicitacion: number;
+    fechaLimiteLicitacion: number;
+    hashPliego: string;
+    estado: number;
+  }) {
+    this.sender = sender;
+    this.unixTimeStamp = unixTimeStamp;
+    this.nombre = nombre;
+    this.ubicacion = ubicacion;
+    this.descripcion = descripcion;
+    this.aperturaLicitacion = aperturaLicitacion;
+    this.fechaLimiteLicitacion = fechaLimiteLicitacion;
+    this.hashPliego = hashPliego;
+    this.estado = estado;
   }
 
-  cambia_estado(estado){
-    this.estado=estado
+  cambiaEstado(estado) {
+    this.estado = estado;
   }
 
-  checkBetween(from,to){
-    return (this.unix_timestamp >= from && this.unix_timestamp<= to )?true:false
+  checkBetween(from, to) {
+    return this.unixTimeStamp >= from && this.unixTimeStamp <= to
+      ? true
+      : false;
   }
 
-  checkActiva(){
-    const now:number = Math.floor(Date.now() / 1000)
-    return true
+  checkActiva() {
+    const NOW: number = Math.floor(Date.now() / 1000);
+    return true;
   }
 
-  agrega_licitacion(sender,empresa,cuit,descripcion,monto,tiempo,hash_presupuesto,estado){
-    const unix_timestamp = Math.floor(Date.now() / 1000)
-    const licitacion = new Licitacion({sender,unix_timestamp,empresa,cuit,descripcion,monto,tiempo,hash_presupuesto,estado});
-    this.licitaciones.push(licitacion);
+  agregaLicitacion(
+    sender,
+    empresa,
+    cuit,
+    descripcion,
+    monto,
+    tiempo,
+    hashPresupuesto,
+    estado
+  ) {
+    const UNIX_TIME_STAMP = Math.floor(Date.now() / 1000);
+    const LICITACION = new Licitacion({
+      sender,
+      UNIX_TIME_STAMP,
+      empresa,
+      cuit,
+      descripcion,
+      monto,
+      tiempo,
+      hashPresupuesto,
+      estado,
+    });
+    this.licitaciones.push(LICITACION);
   }
 
-  cambia_estado_licitacion(index_licitacion,estado){
-    this.licitaciones[index_licitacion].cambia_estado(estado)
+  cambiaEstadoLicitacion(indexLicitacion, estado) {
+    this.licitaciones[indexLicitacion].cambiaEstado(estado);
   }
 
-  evalua_licitacion(index_licitacion,valoracion,justificacion,estado){
-    this.licitaciones[index_licitacion].evalua(valoracion,justificacion,estado)
+  evaluaLicitacion(indexLicitacion, valoracion, justificacion, estado) {
+    this.licitaciones[indexLicitacion].evalua(
+      valoracion,
+      justificacion,
+      estado
+    );
   }
 }
