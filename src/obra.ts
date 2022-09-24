@@ -33,4 +33,31 @@ export class Proyecto {
         this.hash_pliego=hash_pliego;
         this.estado=estado;
   }
+
+  cambia_estado(estado){
+    this.estado=estado
+  }
+
+  checkBetween(from,to){
+    return (this.unix_timestamp >= from && this.unix_timestamp<= to )?true:false
+  }
+
+  checkActiva(){
+    const now:number = Math.floor(Date.now() / 1000)
+    return true
+  }
+
+  agrega_licitacion(sender,empresa,cuit,descripcion,monto,tiempo,hash_presupuesto,estado){
+    const unix_timestamp = Math.floor(Date.now() / 1000)
+    const licitacion = new Licitacion({sender,unix_timestamp,empresa,cuit,descripcion,monto,tiempo,hash_presupuesto,estado});
+    this.licitaciones.push(licitacion);
+  }
+
+  cambia_estado_licitacion(index_licitacion,estado){
+    this.licitaciones[index_licitacion].cambia_estado(estado)
+  }
+
+  evalua_licitacion(index_licitacion,valoracion,justificacion,estado){
+    this.licitaciones[index_licitacion].evalua(valoracion,justificacion,estado)
+  }
 }

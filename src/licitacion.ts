@@ -35,4 +35,15 @@ export class Licitacion {
         this.hash_presupuesto=hash_presupuesto;
         this.estado=estado;
   }
+  cambia_estado(estado){
+    this.estado=estado
+  }
+
+  evalua(valoracion,justificacion,estado){
+    const unix_timestamp = Math.floor(Date.now() / 1000)
+    this.fecha_evaluacion=unix_timestamp
+    this.valoracion=valoracion
+    this.justificacion=justificacion
+    this.estado=estado
+  }
 }
