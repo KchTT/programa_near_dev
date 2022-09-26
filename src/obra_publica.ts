@@ -8,7 +8,7 @@ class Obra {
   proyectos: LookupMap<Proyecto>;
 
   @view({})
-  get_proyectos({ from = 0, to = 0, limit = 10 }: { from: number, to: number, limit: number }): Proyecto[] {
+  get_proyectos({ from = 0, to = 0 }: { from: number, to: number }): Proyecto[] {
     const filtrados = this.proyectos.filter(proyecto => {
       if (proyecto >= from || proyecto <= to) {
         return this.proyectos.get(proyecto)
