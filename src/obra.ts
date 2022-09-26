@@ -1,4 +1,4 @@
-export const estados = ["STAND BY", "LICITACION", "ACTIVA", "FINALIZADA", "CANCELADA"]
+export const estados = ["STAND BY", "ACTIVA", "FINALIZADA", "CANCELADA"]
 import { Licitacion } from './licitacion'
 
 export class Proyecto {
@@ -44,8 +44,7 @@ export class Proyecto {
   }
 
   checkActiva() {
-    const now: number = Math.floor(Date.now() / 1000)
-    return true
+    return this.estado == 1 ? true : false; 
   }
 
   agrega_licitacion(sender, empresa, cuit, descripcion, monto, tiempo, hash_presupuesto, estado) {
