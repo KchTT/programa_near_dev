@@ -1,7 +1,5 @@
 import { NearBindgen, LookupMap, call, near, view } from 'near-sdk-js';
 import { Proyecto, estados } from './obra'
-import { Licitacion } from './licitacion'
-
 
 @NearBindgen({})
 class Obra {
@@ -18,7 +16,7 @@ class Obra {
   }
 
   @view({})
-  get_licitaciones_activas({ }): Proyecto[] {
+  get_licitaciones_activas({}): Proyecto[] {
     const filtrados = this.proyectos.filter(proyecto => {
       if (proyecto.checkActiva()) {
         return this.proyectos.get(proyecto)
@@ -43,7 +41,6 @@ class Obra {
     proyecto_select.cambia_estado(estado)
     return 1
   }
-
 
   @call({ payableFunction: true })
   add_licitacion({ index_obra, empresa, cuit, descripcion, monto, tiempo, hash_presupuesto, estado }): number {
